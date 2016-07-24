@@ -16,7 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Usually this is not overridden. Using the "did finish launching" method is more typical
         print("App Delegate: will finish launching")
-        
+        if NSUserDefaults.standardUserDefaults().boolForKey("launchedBefore") {
+            print("lanched before")
+        } else {
+            print("not launched before")
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "lanuchedBefore")
+            //no default for slider as this is already default but set to see the flow
+            NSUserDefaults.standardUserDefaults().setFloat(0.0, forKey: "pitch")
+        }
+
         return true
     }
     

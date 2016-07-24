@@ -39,6 +39,8 @@ class PlaySoundsViewController: UIViewController {
         } catch _ {
             audioFile = nil
         }
+        let setPitch = NSUserDefaults.standardUserDefaults().floatForKey("pitch")
+        sliderView.value = setPitch
         
         setUserInterfaceToPlayMode(false)
     }
@@ -47,11 +49,6 @@ class PlaySoundsViewController: UIViewController {
         startButton.hidden = isPlayMode
         stopButton.hidden = !isPlayMode
         sliderView.enabled = !isPlayMode
-        //here we need to get the value that was previously saved/set the position to default
-        if let setPitch = NSUserDefaults.standardUserDefaults().valueForKey("pitch") {
-            print("--------------------->", setPitch)
-            sliderView.value = Float(setPitch as! NSNumber)
-        }
     }
 
     @IBAction func playAudio(sender: UIButton) {
@@ -64,6 +61,10 @@ class PlaySoundsViewController: UIViewController {
         
         // Set the UI
         setUserInterfaceToPlayMode(true)
+        
+        //set the slider value in NSUserDefaults
+        NSUserDefaults.standardUserDefaults().setFloat(sliderView.value, forKey: "pitch")
+        print("value set")
         
     }
     
@@ -102,9 +103,6 @@ class PlaySoundsViewController: UIViewController {
     }
     
     @IBAction func sliderDidMove(sender: UISlider) {
-//        print("Slider vaue: \(sliderView.value)")
-        //set the slider value in NSUserDefaults
-        NSUserDefaults.standardUserDefaults().setFloat(sliderView.value, forKey: "pitch")
-        print("value set", NSUserDefaults.standardUserDefaults().valueForKey("pitch"))
+
     }
 }
